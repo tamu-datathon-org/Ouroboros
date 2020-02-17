@@ -7,7 +7,7 @@ from rest_framework import status, response, permissions, authentication
 from rest_framework.authtoken import views
 from rest_framework.request import Request
 
-from application.models import Application, STATUS_CHECKED_IN
+from application.models import Application, STATUS_CHECKED_IN, DietaryRestriction
 from volunteer.models import (
     FoodEvent,
     WorkshopEvent,
@@ -77,10 +77,11 @@ class CreateFoodEventView(views.APIView):
         """
         user_email = request.data.get("email", None)
         meal = request.data.get("meal", None)
-        restrictions = request.data.get("restrictions", None)
+        restriction_str = request.data.get("restrictions", None)
+        restriction = DietaryRestriction.objects.filter(pk=restriction_str).first()
 
         # Ensure that all required parameters are present
-        if not (user_email and meal and restrictions):
+        if not (user_email and meal and restriction):
             return response.Response(status=status.HTTP_400_BAD_REQUEST)
 
         application: Application = get_object_or_404(
@@ -93,10 +94,10 @@ class CreateFoodEventView(views.APIView):
                 data={"error": USER_NOT_CHECKED_IN_MSG},
                 status=status.HTTP_412_PRECONDITION_FAILED,
             )
-
         FoodEvent.objects.create(
-            user=application.user, meal=meal, restrictions=restrictions
+            user=application.user, meal=meal, restriction=restriction
         )
+
         return response.Response(status=status.HTTP_200_OK)
 
 
@@ -150,8 +151,8 @@ class SearchView(views.APIView):
             Application.objects.annotate(
                 full_name=Concat("first_name", Value(" "), "last_name")
             )
-            .filter(full_name__icontains=query)
-            .values("first_name", "last_name", email=F("user__email"))
+                .filter(full_name__icontains=query)
+                .values("first_name", "last_name", email=F("user__email"))
         )
         return JsonResponse({"results": matches})
 
@@ -178,7 +179,9 @@ class UserSummaryView(views.APIView):
         food_events = FoodEvent.objects.filter(user=user)
         workshop_events = WorkshopEvent.objects.filter(user=user)
         checked_in = application.status == STATUS_CHECKED_IN
-
+        serialized_dietary_restrictions = None
+        if application.dietary_restrictions.exists():
+            serialized_dietary_restrictions = ",".join(application.dietary_restrictions.all())
         return JsonResponse(
             {
                 "num_breakfast": food_events.filter(meal=BREAKFAST).count(),
@@ -190,6 +193,6 @@ class UserSummaryView(views.APIView):
                 "num_workshops": workshop_events.count(),
                 "checked_in": checked_in,
                 "status": application.status,
-                "restrictions": application.dietary_restrictions,
+                "restrictions": serialized_dietary_restrictions,
             }
         )

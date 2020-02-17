@@ -59,7 +59,6 @@ class CreateApplicationViewTestCase(test_case.SharedTestCase):
         )
         self.application_fields["resume"] = SimpleUploadedFile("resume2.pdf", b"dummy")
         self.application_fields["school"] = self.first_school.pk
-
         response: HttpResponse = self.client.post(
             reverse_lazy("application:create"), data=self.application_fields
         )

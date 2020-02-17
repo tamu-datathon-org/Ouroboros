@@ -9,9 +9,9 @@ class FoodEventAdmin(admin.ModelAdmin):
     list_filter = (
         ("timestamp", DateTimeRangeFilter),
         ("meal", ChoiceDropdownFilter),
-        ("restrictions", ChoiceDropdownFilter),
+        ("restriction", admin.filters.RelatedFieldListFilter),
     )
-    list_display = ("timestamp", "meal", "restrictions", "user")
+    list_display = ("timestamp", "meal", "user")
 
 
 class WorkshopEventAdmin(admin.ModelAdmin):

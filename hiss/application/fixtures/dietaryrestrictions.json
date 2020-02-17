@@ -1,0 +1,65 @@
+[
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Vegetarian",
+    "fields": {
+      "name": "Vegetarian"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Vegan",
+    "fields": {
+      "name": "Vegan"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Kosher",
+    "fields": {
+      "name": "Kosher"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Halal",
+    "fields": {
+      "name": "Halal"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Gluten-free",
+    "fields": {
+      "name": "Gluten-Free"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Pescatarian",
+    "fields": {
+      "name": "Pescatarian"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "No Pork",
+    "fields": {
+      "name": "No Pork"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "No Beef",
+    "fields": {
+      "name": "No Beef"
+    }
+  },
+  {
+    "model": "application.dietaryrestriction",
+    "pk": "Food Allergy",
+    "fields": {
+      "name": "Food Allergy"
+    }
+  }
+]

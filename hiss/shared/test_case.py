@@ -13,6 +13,7 @@ TEST_RESUME_DIR = "test_resume_dir"
 @override_settings(MEDIA_ROOT=TEST_RESUME_DIR)
 class SharedTestCase(test.TestCase):
     """A shared test case that provides utility functions for testing code easily."""
+    fixtures = ["application/fixtures/dietaryrestrictions.json"]
 
     def setUp(self) -> None:
         self.email = "email@dummy.com"
@@ -53,7 +54,6 @@ class SharedTestCase(test.TestCase):
             "school": self.first_school,
             "transport_needed": application_models.MANUAL_POWER,
             "gender": application_models.FEMALE,
-            "dietary_restrictions": application_models.NONE,
             "classification": application_models.FRESHMAN,
             "grad_year": timezone.now().year + 1,
             "num_hackathons_attended": application_models.HACKATHONS_0,

@@ -2,7 +2,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 from application import models as application_models, models
-from application.models import School
+from application.models import School, DietaryRestriction
 
 
 class ApplicationModelForm(forms.ModelForm):
@@ -15,8 +15,12 @@ class ApplicationModelForm(forms.ModelForm):
         required=False,
     )
     school = forms.ModelChoiceField(
-        School.objects.all(),
-        label="What school do you go to?",
+        School.objects.all(), label="What school do you go to?",
+    )
+    dietary_restrictions = forms.ModelMultipleChoiceField(
+        DietaryRestriction.objects.all(), label="Any dietary restrictions we should know about?",
+        required=False,
+        widget=forms.CheckboxSelectMultiple
     )
 
     def __init__(self, *args, **kwargs):
