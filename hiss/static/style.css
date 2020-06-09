@@ -722,6 +722,7 @@ label {
 }
 
 label[for="id_agree_to_coc"],
+label[for="id_agree_to_mlh_privacy"],
 label[for="id_is_adult"],
 label[for="id_travel_reimbursement"], 
 #id_travel_reimbursement ~ .helptext  {
@@ -733,6 +734,7 @@ label[for=id_is_adult] {
 }
 
 #id_agree_to_coc,
+#id_agree_to_mlh_privacy,
 #id_is_adult,
 #id_travel_reimbursement {
     top: -30px;
@@ -1047,7 +1049,8 @@ button {
 }
 
 @media only screen and (max-width: 390px ) {
-    #id_agree_to_coc {
+    #id_agree_to_coc,
+    #id_agree_to_mlh_privacy {
         top: -53px;
     }
 }

@@ -53,3 +53,14 @@ To use it, simply replace the values in `docker-compose.prod.yml` with the value
 ```shell script
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
+
+### Make changes to models/DB :notebook_with_decorative_cover: :hammer:
+
+Changing the database (adding, changing columns) requires migrations with the following steps:
+
+```bash
+# 1) make the migration after changing models.py
+docker-compose run web python3 manage.py makemigrations
+# 2) run the migration script
+docker-compose run web python3 manage.py migrate --run-syncdb
+```

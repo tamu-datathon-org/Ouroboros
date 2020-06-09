@@ -28,6 +28,10 @@ class ApplicationModelForm(forms.ModelForm):
             'I agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH Code of Conduct</a>'
         )
 
+        self.fields["agree_to_mlh_privacy"].label = mark_safe(
+            'I agree to the <a href="https://mlh.io/privacy">MLH Privacy Policy</a>'
+        )
+
         # HACK: Disable the form if there's not an active wave
         if not application_models.Wave.objects.active_wave():
             for field_name in self.fields.keys():
@@ -68,6 +72,7 @@ class ApplicationModelForm(forms.ModelForm):
         widgets = {
             "is_adult": forms.CheckboxInput,
             "agree_to_coc": forms.CheckboxInput,
+            "agree_to_mlh_privacy": forms.CheckboxInput,
             "travel_reimbursement": forms.CheckboxInput,
             "extra_links": forms.TextInput(
                 attrs={
@@ -101,5 +106,6 @@ class ApplicationModelForm(forms.ModelForm):
             "additional_accommodations",
             "notes",
             "agree_to_coc",
+            "agree_to_mlh_privacy",
             "is_adult",
         ]
