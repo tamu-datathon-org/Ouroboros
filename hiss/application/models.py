@@ -314,7 +314,13 @@ class Application(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=["pdf"])],
         upload_to=uuid_generator,
     )
-
+    # PERSONAL LINKS
+    github_link = models.URLField("Your GitHub", blank=True, max_length=255)
+    linkedin_link = models.URLField("Your Linkedin", blank=True, max_length=255)
+    personal_website_link = models.URLField("Your Website", blank=True, max_length=255)
+    instagram_link = models.URLField("Your Instagram", blank=True, max_length=255)
+    devpost_link = models.URLField("Your Devpost", blank=True, max_length=255)
+    
     # DEMOGRAPHIC INFORMATION
     school = models.ForeignKey(
         School,
@@ -361,9 +367,6 @@ class Application(models.Model):
     # LOGISTICAL INFO
     shirt_size = models.CharField(
         "What size shirt do you wear?", choices=SHIRT_SIZES, max_length=4
-    )
-    transport_needed = models.CharField(
-        "How will you be getting to the event?", choices=TRANSPORT_MODES, max_length=11
     )
     travel_reimbursement = models.BooleanField(
         "I'd like to apply for travel reimbursement",
