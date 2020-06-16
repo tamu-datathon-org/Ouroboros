@@ -211,6 +211,11 @@ input[type="submit"] {
     display: none;
 }
 
+#id_github_link,
+#id_linkedin_link,
+#id_personal_website_link,
+#id_instagram_link,
+#id_devpost_link,
 #id_extra_links {
     width: 100% !important;
 }
@@ -421,9 +426,10 @@ input[type="submit"] {
     height: 50px;
 }
 
-.application p > input[type=text], .application p > input[type=tel] {
-    width: 50% !important;
+.application p > select > #id_major {
+    height: 90px;
 }
+
 
 .application p > select {
     color: var(--simple-black) !important;
@@ -472,7 +478,12 @@ input[type="submit"] {
     margin-right: 20px !important;
 }
 
-.application input[type='text'], input[type='number'], input[type="tel"], .application textarea, .application select {
+.application input[type='text'], 
+input[type='number'],
+input[type='url'], 
+input[type="tel"], 
+.application textarea, 
+.application select {
     width: 100%;
     padding: 8px;
     border-radius: 3px;
@@ -480,10 +491,6 @@ input[type="submit"] {
     font-size: 14px;
 }
 
-.application select {
-    background: var(--simple-white);
-    width: 50%;
-}
 
 .application select option {
     -webkit-appearance: none;
@@ -721,25 +728,30 @@ label {
     font-size: 14px;
 }
 
-label[for="id_agree_to_coc"],
-label[for="id_agree_to_mlh_privacy"],
+label[for="id_agree_to_data_sharing"],
+label[for="id_agree_to_mlh_policies"],
+label[for="id_first_generation"],
 label[for="id_is_adult"],
-label[for="id_travel_reimbursement"], 
+label[for="id_travel_reimbursement"],
+label[for="id_learner_pack"],
 #id_travel_reimbursement ~ .helptext  {
     margin-left: 45px;
 }
 
-label[for=id_is_adult] {
-    margin-top: -20px;
-}
 
-#id_agree_to_coc,
-#id_agree_to_mlh_privacy,
+
+#id_agree_to_data_sharing,
+#id_agree_to_mlh_policies,
+#id_first_generation,
+#id_learner_pack,
 #id_is_adult,
 #id_travel_reimbursement {
     top: -30px;
 }
 
+#id_agree_to_data_sharing ~ .helptext,
+#id_agree_to_mlh_policies ~ .helptext,
+#id_learner_pack ~ .helptext,
 #id_is_adult ~ .helptext,
 #id_travel_reimbursement ~ .helptext  {
     margin-top: -30px;
@@ -865,7 +877,8 @@ button {
 
 .team-form .create label { display: none; }
 
-.team-form form input[type=text] {
+.team-form form input[type=text],
+.team-form form input[type=url] {
     border: 1px solid var(--light-grey);
     border-radius: 5px;
     padding: 10px 15px;
@@ -962,7 +975,8 @@ button {
     .signin h1 {
         font-size: 1.2rem;
     }
-    .application p > input[type=text], 
+    .application p > input[type=text],
+    .application p > input[type=url], 
     .application p > input[type=tel] {
         width: 100% !important;
     }
@@ -1049,8 +1063,9 @@ button {
 }
 
 @media only screen and (max-width: 390px ) {
-    #id_agree_to_coc,
-    #id_agree_to_mlh_privacy {
+    #id_agree_to_data_collection,
+    #id_agree_to_mlh_policies,
+    #id_first_generation {
         top: -53px;
     }
 }

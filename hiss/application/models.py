@@ -138,6 +138,15 @@ CLASSIFICATIONS: List[Tuple[str, str]] = [
     (CLASSIFICATION_OTHER, "Other"),
 ]
 
+ADVERTISING: List[Tuple[str, str]] = [
+    ("University Email", "University Email"),
+    ("Facebook/Instagram", "Facebook / Instagram"),
+    ("Friend", "A Friend"),
+    ("MLH", "MLH Website / Newsletter"),
+    ("MSC", "MSC Open House"),
+    ("On Campus", "Campus Marketing (E.g. Flyers, Posters, Whiteboards, etc)"),
+]
+
 NONE = "None"
 VEGETARIAN = "Vegetarian"
 VEGAN = "Vegan"
@@ -205,9 +214,12 @@ TRANSPORT_MODES: List[Tuple[str, str]] = [
     (MANUAL_POWER, "Walking/Biking"),
 ]
 
-QUESTION1_TEXT = "Tell us your best programming joke"
-QUESTION2_TEXT = "What is the one thing you'd build if you had unlimited resources?"
-QUESTION3_TEXT = f"What is a cool prize you'd like to win at {settings.EVENT_NAME}?"
+QUESTION1_TEXT = "What prize do you want to see at TD?"
+QUESTION2_TEXT = "What workshops do you want to see at TD?"
+QUESTION3_TEXT = "Have you taken any data science / CS related classes?"
+QUESTION4_TEXT = "Are you involved in any data science / CS related clubs on campus?"
+QUESTION5_TEXT = "Have you had any data science or CS related jobs/internships?"
+QUESTION6_TEXT = "What industry interests you the most?"
 
 WOMENS_XXS = "WXXS"
 WOMENS_XS = "WXS"
@@ -301,13 +313,16 @@ class Application(models.Model):
         max_length=255, blank=False, null=False, verbose_name="last name"
     )
     extra_links = models.CharField(
-        "Point us to anything you'd like us to look at while considering your application",
+        "Point us to anything else you'd like us to look at while considering your application",
         max_length=200,
         blank=True,
     )
     question1 = models.TextField(QUESTION1_TEXT, max_length=500)
     question2 = models.TextField(QUESTION2_TEXT, max_length=500)
     question3 = models.TextField(QUESTION3_TEXT, max_length=500)
+    question4 = models.TextField(QUESTION4_TEXT, max_length=500)
+    question5 = models.TextField(QUESTION5_TEXT, max_length=500)
+    question6 = models.TextField(QUESTION6_TEXT, max_length=500)
     resume = models.FileField(
         "Upload your resume (PDF only)",
         help_text="Companies will use this resume to offer interviews for internships and full-time positions.",
@@ -329,7 +344,9 @@ class Application(models.Model):
         verbose_name="What school do you go to?",
     )
     school_other = models.CharField(null=True, blank=True, max_length=255)
-    major = models.CharField("What's your major?", max_length=255)
+    major = models.TextField("What's your major(s)?", max_length=500)
+    minor = models.TextField("What's your minor(s)?", max_length=500)
+    physical_location = models.CharField("Where will you be participating from?", max_length=20)
     classification = models.CharField(
         "What classification are you?", choices=CLASSIFICATIONS, max_length=3
     )
@@ -339,6 +356,7 @@ class Application(models.Model):
     gender_other = models.CharField(
         "Self-describe", max_length=255, null=True, blank=True
     )
+    age = models.IntegerField("What is your age?")
     race = MultiSelectField(
         "What race(s) do you identify with?", choices=RACES, max_length=41
     )
@@ -352,10 +370,32 @@ class Application(models.Model):
     num_hackathons_attended = models.CharField(
         "How many hackathons have you attended?", max_length=22, choices=HACKATHON_TIMES
     )
+    advertising = models.CharField(
+        "How did you hear about us?", max_length=22, choices=ADVERTISING
+    )
+    first_generation = models.BooleanField(
+        choices=AGREE,
+        default=None
+    )
+    datascience_experience = models.TextField(max_length=500)
+    technology_experience = models.TextField(max_length=500)
+    learner_pack = models.BooleanField(
+        choices=AGREE,
+        default=None,
+        help_text = "Learners will recieve priority admission to learner classes, be assigned a dedicated mentor, and have access to learner specific challenges/prizes."
+    )
 
     # LEGAL INFO
-    agree_to_coc = models.BooleanField(choices=AGREE, default=None)
-    agree_to_mlh_privacy = models.BooleanField(choices=AGREE, default=None)
+    agree_to_mlh_policies = models.BooleanField(
+        choices=AGREE,
+        default=None,
+        help_text = "Being an MLH event, we need participants to be familiar with the MLH Code of Conduct and the MLH Contest Terms and Conditions."
+    )
+    agree_to_data_sharing = models.BooleanField(
+        choices=AGREE,
+        default=None,
+        help_text = "We need your authorization to share your application/registration information for event administration, ranking, MLH administration, pre and post-event informational e-mails, and occasional messages about hackathons, in-line with the MLH Privacy Policy."
+    )
     is_adult = models.BooleanField(
         "Please confirm you are 18 or older.",
         choices=AGREE,
@@ -382,6 +422,12 @@ class Application(models.Model):
         "Do you have any dietary restrictions?",
         choices=DIETARY_RESTRICTIONS,
         max_length=50,
+        default=NONE,
+    )
+    volunteer_interest = models.CharField(
+        "Would you be interested in volunteering/mentoring for part of the event?",
+        max_length = 22,
+        choices=TRUE_FALSE_CHOICES,
         default=NONE,
     )
 

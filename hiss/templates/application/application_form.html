@@ -23,4 +23,16 @@
         </form>
     </div>
 
+    <script>
+        window.onload = function() {
+            var node = document.createElement("h6");
+            node.style.cssText="color:#4286f3";
+            node.innerHTML= "The application is complete! Scroll to the bottom to submit, or answer the following questions to help improve the event.<br>";
+            document.getElementById("id_learner_pack").parentElement.appendChild(node);
+            document.getElementById("id_major").style.cssText="height:90px";
+            document.getElementById("id_minor").style.cssText = "height:90px";
+            document.getElementById("id_technology_experience").style.cssText = "height:90px";
+        };
+    </script>
+
 {% endblock %}
