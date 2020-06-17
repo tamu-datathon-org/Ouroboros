@@ -200,9 +200,7 @@ class ApplicationAdmin(admin.ModelAdmin):
         ("grad_year", ChoiceDropdownFilter),
         ("num_hackathons_attended", ChoiceDropdownFilter),
         ("shirt_size", ChoiceDropdownFilter),
-        ("dietary_restrictions", ChoiceDropdownFilter),
         ("datetime_submitted", DateRangeFilter),
-        ("travel_reimbursement", DropdownFilter),
         RaceFilter,
     )
     list_display = (

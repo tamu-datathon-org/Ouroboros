@@ -138,7 +138,7 @@ CLASSIFICATIONS: List[Tuple[str, str]] = [
     (CLASSIFICATION_OTHER, "Other"),
 ]
 
-ADVERTISING: List[Tuple[str, str]] = [
+ADVERTISINGLIST: List[Tuple[str, str]] = [
     ("University Email", "University Email"),
     ("Facebook/Instagram", "Facebook / Instagram"),
     ("Friend", "A Friend"),
@@ -146,7 +146,6 @@ ADVERTISING: List[Tuple[str, str]] = [
     ("MSC", "MSC Open House"),
     ("On Campus", "Campus Marketing (E.g. Flyers, Posters, Whiteboards, etc)"),
 ]
-
 NONE = "None"
 VEGETARIAN = "Vegetarian"
 VEGAN = "Vegan"
@@ -186,32 +185,6 @@ GRAD_YEARS: List[Tuple[int, int]] = [
     for y in range(
         timezone.now().year, timezone.now().year + settings.MAX_YEARS_ADMISSION
     )
-]
-
-DRIVING = "D"
-EVENT_PROVIDED_BUS = "B"
-EVENT_PROVIDED_BUS_UT = "BUT"
-EVENT_PROVIDED_BUS_UTD = "BUTD"
-EVENT_PROVIDED_BUS_UTA = "BUTA"
-EVENT_PROVIDED_BUS_UTSA = "BUTSA"
-EVENT_PROVIDED_BUS_UTRGV = "BUTRGV"
-OTHER_BUS = "OB"
-FLYING = "F"
-PUBLIC_TRANSPORTATION = "P"
-MANUAL_POWER = "M"
-
-TRANSPORT_MODES: List[Tuple[str, str]] = [
-    (DRIVING, "Driving"),
-    (EVENT_PROVIDED_BUS, f"{settings.EVENT_NAME} Bus"),
-    (EVENT_PROVIDED_BUS_UT, f"{settings.EVENT_NAME} Bus - UT Austin"),
-    (EVENT_PROVIDED_BUS_UTD, f"{settings.EVENT_NAME} Bus - UT Dallas"),
-    (EVENT_PROVIDED_BUS_UTA, f"{settings.EVENT_NAME} Bus - UT Arlington"),
-    (EVENT_PROVIDED_BUS_UTSA, f"{settings.EVENT_NAME} Bus - UTSA"),
-    (EVENT_PROVIDED_BUS_UTRGV, f"{settings.EVENT_NAME} Bus - UTRGV"),
-    (OTHER_BUS, "Other Bus (Greyhound, Megabus, etc.)"),
-    (FLYING, "Flying"),
-    (PUBLIC_TRANSPORTATION, "Public Transportation"),
-    (MANUAL_POWER, "Walking/Biking"),
 ]
 
 QUESTION1_TEXT = "What prize do you want to see at TD?"
@@ -320,9 +293,11 @@ class Application(models.Model):
     question1 = models.TextField(QUESTION1_TEXT, max_length=500)
     question2 = models.TextField(QUESTION2_TEXT, max_length=500)
     question3 = models.TextField(QUESTION3_TEXT, max_length=500)
-    question4 = models.TextField(QUESTION4_TEXT, max_length=500)
-    question5 = models.TextField(QUESTION5_TEXT, max_length=500)
-    question6 = models.TextField(QUESTION6_TEXT, max_length=500)
+    # question4 = models.TextField(QUESTION4_TEXT, max_length=500)
+    # question5 = models.TextField(QUESTION5_TEXT, max_length=500)
+    # question6 = models.TextField(QUESTION6_TEXT, max_length=500)
+    major = models.CharField(max_length=500, blank=False, null=False, default=None)
+    minor = models.CharField(max_length=500, blank=False, null=False, default=None)
     resume = models.FileField(
         "Upload your resume (PDF only)",
         help_text="Companies will use this resume to offer interviews for internships and full-time positions.",
@@ -330,11 +305,15 @@ class Application(models.Model):
         upload_to=uuid_generator,
     )
     # PERSONAL LINKS
-    github_link = models.URLField("Your GitHub", blank=True, max_length=255)
-    linkedin_link = models.URLField("Your Linkedin", blank=True, max_length=255)
-    personal_website_link = models.URLField("Your Website", blank=True, max_length=255)
-    instagram_link = models.URLField("Your Instagram", blank=True, max_length=255)
-    devpost_link = models.URLField("Your Devpost", blank=True, max_length=255)
+    github_link = models.URLField("Your GitHub", blank=True, max_length=255, default=None)
+    linkedin_link = models.URLField(
+        "Your Linkedin", blank=True, max_length=255, default=None)
+    personal_website_link = models.URLField(
+        "Your Website", blank=True, max_length=255, default=None)
+    instagram_link = models.URLField(
+        "Your Instagram", blank=True, max_length=255, default=None)
+    devpost_link = models.URLField(
+        "Your Devpost", blank=True, max_length=255, default=None)
     
     # DEMOGRAPHIC INFORMATION
     school = models.ForeignKey(
@@ -344,9 +323,12 @@ class Application(models.Model):
         verbose_name="What school do you go to?",
     )
     school_other = models.CharField(null=True, blank=True, max_length=255)
-    major = models.TextField("What's your major(s)?", max_length=500)
-    minor = models.TextField("What's your minor(s)?", max_length=500)
-    physical_location = models.CharField("Where will you be participating from?", max_length=20)
+    major = models.TextField("What's your major(s)?",
+                             max_length=500, default=None)
+    minor = models.TextField("What's your minor(s)?",
+                             max_length=500, default=None)
+    physical_location = models.CharField(
+        "Where will you be participating from?", max_length=20, default=None)
     classification = models.CharField(
         "What classification are you?", choices=CLASSIFICATIONS, max_length=3
     )
@@ -356,7 +338,7 @@ class Application(models.Model):
     gender_other = models.CharField(
         "Self-describe", max_length=255, null=True, blank=True
     )
-    age = models.IntegerField("What is your age?")
+    age = models.IntegerField("What is your age?", default=None)
     race = MultiSelectField(
         "What race(s) do you identify with?", choices=RACES, max_length=41
     )
@@ -371,14 +353,14 @@ class Application(models.Model):
         "How many hackathons have you attended?", max_length=22, choices=HACKATHON_TIMES
     )
     advertising = models.CharField(
-        "How did you hear about us?", max_length=22, choices=ADVERTISING
+        "How did you hear about us?", max_length=22, choices=ADVERTISINGLIST, default=None
     )
     first_generation = models.BooleanField(
         choices=AGREE,
-        default=None
+        default=False,
     )
-    datascience_experience = models.TextField(max_length=500)
-    technology_experience = models.TextField(max_length=500)
+    datascience_experience = models.TextField(max_length=500, default=None)
+    technology_experience = models.TextField(max_length=500, default=None)
     learner_pack = models.BooleanField(
         choices=AGREE,
         default=None,
@@ -408,27 +390,16 @@ class Application(models.Model):
     shirt_size = models.CharField(
         "What size shirt do you wear?", choices=SHIRT_SIZES, max_length=4
     )
-    travel_reimbursement = models.BooleanField(
-        "I'd like to apply for travel reimbursement",
-        default=False,
-        help_text="Travel reimbursement is only provided if you stay the whole time and submit a project.",
-    )
     additional_accommodations = models.TextField(
         "Do you require any special accommodations at the event?",
         max_length=500,
         blank=True,
     )
-    dietary_restrictions = models.CharField(
-        "Do you have any dietary restrictions?",
-        choices=DIETARY_RESTRICTIONS,
-        max_length=50,
-        default=NONE,
-    )
-    volunteer_interest = models.CharField(
+    volunteer_interest = models.BooleanField(
         "Would you be interested in volunteering/mentoring for part of the event?",
         max_length = 22,
         choices=TRUE_FALSE_CHOICES,
-        default=NONE,
+        default=False,
     )
 
     # CONFIRMATION DEADLINE

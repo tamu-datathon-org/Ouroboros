@@ -294,7 +294,6 @@ class ApplicationModelForm(forms.ModelForm):
             "agree_to_mlh_policies": forms.CheckboxInput,
             "first_generation": forms.CheckboxInput,
             "learner_pack": forms.CheckboxInput,
-            "travel_reimbursement": forms.CheckboxInput,
             "extra_links": forms.TextInput(
                 attrs={
                     "placeholder": "ex. personal projects, organization website, etc."
