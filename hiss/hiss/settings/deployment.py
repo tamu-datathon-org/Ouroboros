@@ -36,7 +36,7 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = f"The {EVENT_NAME} Team <connect@tamudatathon.com>"
 
-AUTH_CHECK_URL = "http://proxy:8080/auth/user"
+AUTH_CHECK_URL = "https://dev.tamudatathon.com/auth/user"
 
 URL_ORIGIN = "https://dev.tamudatathon.com"
 
