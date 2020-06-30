@@ -186,7 +186,7 @@ DS_ML_CLASSES_QTEXT = (
     "What data science or machine learning related classes have you taken, if any?"
 )
 DS_ML_CLUBS_QTEXT = (
-    "Are you involved in any data science or machine learning related clubs on campus?"
+    "What data science or machine learning related clubs on campus are you involved in, if any?"
 )
 DS_ML_JOBS_QTEXT = "What data science or machine learning related jobs/internships have you had, if any?"
 # Question 6 is moved to forms.py
