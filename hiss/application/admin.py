@@ -120,7 +120,7 @@ def export_applicant_data(_modeladmin, _request: HttpRequest, queryset: QuerySet
     Exports all data related to the selected `Application`s to a CSV file
     """
     response = HttpResponse(content_type="text/csv")
-    response["Content-Disposition"] = 'attachment; filename="emails.csv"'
+    response["Content-Disposition"] = 'attachment; filename="applicant_data.csv"'
 
     writer = csv.writer(response)
     writer.writerow(
