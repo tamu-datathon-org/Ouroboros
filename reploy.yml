@@ -8,8 +8,8 @@ services:
     image: nginx
     port: 80
   serve:
-    - echo "serve steps for nginx proxy"
+    - echo serve steps for nginx proxy
     - ls -la
   build:
-    - echo "build steps for nginx proxy"
+    - echo build steps for nginx proxy
     - ls -la
