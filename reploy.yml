@@ -10,6 +10,3 @@ services:
   serve:
     - echo serve steps for nginx proxy
     - ls -la
-  build:
-    - echo build steps for nginx proxy
-    - ls -la
