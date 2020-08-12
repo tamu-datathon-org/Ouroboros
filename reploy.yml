@@ -7,3 +7,9 @@ services:
   proxy:
     image: nginx
     port: 80
+  setup:
+    - echo "setup steps for nginx proxy"
+    - ls -la
+  build:
+    - echo "build steps for nginx proxy"
+    - ls -la
