@@ -4,6 +4,14 @@ on:
     - master
   pull-requests: true
 services:
-  proxy:
-    image: nginx
-    port: 80
+  web:
+    image: ./Dockerfile.dev
+    port: 8000
+  environment:
+    PORT: 8000
+    DATABASE_URL: postgres://postgres:dev_password@db:5432/hiss
+    BASE_PATHNAME: apply
+    SECRET_KEY: "SOME_SECRET_STRING"
+    AWS_ACCESS_KEY_ID: "YOUR_AWS_KEY"
+    AWS_SECRET_ACCESS_KEY: "YOUR_AWS_SECRET"
+    GATEKEEPER_INTEGRATION_SECRET: "SECRET_HERE"
