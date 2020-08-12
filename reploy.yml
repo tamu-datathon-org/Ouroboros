@@ -7,6 +7,3 @@ services:
   proxy:
     image: nginx
     port: 80
-  serve:
-    - echo serve steps for nginx proxy
-    - ls -la
