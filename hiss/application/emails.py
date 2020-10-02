@@ -30,7 +30,7 @@ def send_confirmation_email(app: Application) -> None:
     :type app: Application
     :return: None
     """
-    subject = f"{settings.EVENT_NAME} Confirmation!"
+    subject = f"{settings.EVENT_NAME} - Congratulations!"
     email_template = "application/emails/confirmed.html"
     context = {"first_name": app.first_name, "event_name": settings.EVENT_NAME}
     html_msg = render_to_string(email_template, context)

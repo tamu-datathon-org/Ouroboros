@@ -24,6 +24,7 @@ from application.models import (
     Wave,
     STATUS_ADMITTED,
     STATUS_REJECTED,
+    STATUS_CONFIRMED,
     RACES,
 )
 from shared.admin_functions import send_mass_html_mail
@@ -49,15 +50,16 @@ def build_approval_email(
     Creates a datatuple of (subject, message, html_message, from_email, [to_email]) indicating that a `User`'s
     application has been approved.
     """
-    subject = f"Your {settings.EVENT_NAME} application has been approved!"
+    subject = f"{settings.EVENT_NAME} - Congratulations!"
 
-    context = {
-        "first_name": application.first_name,
-        "event_name": settings.EVENT_NAME,
-        "confirmation_deadline": confirmation_deadline,
-        "registration_url": settings.URL_ORIGIN,
-    }
-    html_message = render_to_string("application/emails/approved.html", context)
+    # context = {
+    #     "first_name": application.first_name,
+    #     "event_name": settings.EVENT_NAME,
+    #     "confirmation_deadline": confirmation_deadline,
+    #     "registration_url": settings.URL_ORIGIN,
+    # }
+    context = {}
+    html_message = render_to_string("application/emails/confirmed.html", context)
     message = strip_tags(html_message)
     return subject, message, html_message, None, [application.user.email]
 
@@ -87,7 +89,7 @@ def approve(_modeladmin, _request: HttpRequest, queryset: QuerySet) -> None:
             deadline = timezone.now().replace(
                 hour=23, minute=59, second=59, microsecond=0
             ) + timezone.timedelta(application.wave.num_days_to_rsvp)
-            application.status = STATUS_ADMITTED
+            application.status = STATUS_CONFIRMED
             application.confirmation_deadline = deadline
             email_tuples.append(build_approval_email(application, deadline))
             application.save()
