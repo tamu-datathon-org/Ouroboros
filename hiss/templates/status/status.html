@@ -33,17 +33,6 @@
                     <span class="point"></span>
                 {% endif %}
             </li>
-
-            {% if CONFIRMED or NEEDS_TO_CONFIRM or DECLINED %}
-                <li>
-                    <p class="diplome">RSVP</p>
-                    {% if CONFIRMED or DECLINED %}
-                        <img src="{% static 'tick.svg' %}">
-                    {% else %}
-                        <span class="point"></span>
-                    {% endif %}
-                </li>
-            {% endif %}
             </ol>
         </header>
 
@@ -112,8 +101,8 @@
                 </div>
 
             {% elif CONFIRMED %}
-                <p>Your attendance has been</p>
-                <div class="app-status">CONFIRMED</div>
+                <p>Your application has been</p>
+                <div class="app-status">ACCEPTED</div>
 
                 <p class="status-subtitle pt-2">
                     Congratulations! Prepare for the event by visiting <a href="https://tamudatathon.com">our homepage</a>. We should also be sending out an email with important event information as we get closer to the event. See you soon!

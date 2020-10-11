@@ -83,7 +83,8 @@ def approve(_modeladmin, _request: HttpRequest, queryset: QuerySet) -> None:
     each user based on how many days each wave gives to RSVP, and then emails all of the users to inform them that
     their applications have been approved.
     """
-    email_tuples = []
+    # HACK: Removing auto-emailing for TAMU Datathon 2020 as we're sending emails manually.
+    #email_tuples = []
     with transaction.atomic():
         for application in queryset:
             deadline = timezone.now().replace(
@@ -91,9 +92,9 @@ def approve(_modeladmin, _request: HttpRequest, queryset: QuerySet) -> None:
             ) + timezone.timedelta(application.wave.num_days_to_rsvp)
             application.status = STATUS_CONFIRMED
             application.confirmation_deadline = deadline
-            email_tuples.append(build_approval_email(application, deadline))
+            #email_tuples.append(build_approval_email(application, deadline))
             application.save()
-    send_mass_html_mail(email_tuples)
+    #send_mass_html_mail(email_tuples)
 
 
 def reject(_modeladmin, _request: HttpRequest, queryset: QuerySet) -> None:
@@ -164,6 +165,7 @@ def export_applicant_data(_modeladmin, _request: HttpRequest, queryset: QuerySet
             "personal_website_link",
             "instagram_link",
             "devpost_link",
+            "resume",
         ]
     )
     for instance in queryset:
@@ -207,6 +209,7 @@ def export_applicant_data(_modeladmin, _request: HttpRequest, queryset: QuerySet
                 instance.personal_website_link,
                 instance.instagram_link,
                 instance.devpost_link,
+                instance.resume.url,
             ]
         )
 
