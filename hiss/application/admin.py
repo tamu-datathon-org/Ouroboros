@@ -130,6 +130,7 @@ def export_applicant_data(_modeladmin, _request: HttpRequest, queryset: QuerySet
         [
             "date_submitted",
             "application_status",
+            "auth_id",
             "first_name",
             "last_name",
             "email",
@@ -174,6 +175,7 @@ def export_applicant_data(_modeladmin, _request: HttpRequest, queryset: QuerySet
             [
                 instance.datetime_submitted,
                 instance.status,
+                instance.user.auth_id,
                 instance.first_name,
                 instance.last_name,
                 instance.user.email,
