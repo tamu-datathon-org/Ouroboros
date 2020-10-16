@@ -27,6 +27,7 @@ def healthcheck(request):
 
 
 urlpatterns = [
+    url(settings.BASE_PATHNAME + "admin/login", RedirectView.as_view(url="/auth/login?r=/apply/admin/application/application")),
     path(settings.BASE_PATHNAME + "admin/", admin.site.urls),
     path(settings.BASE_PATHNAME + "accounts/", include("customauth.urls")),
     path(
